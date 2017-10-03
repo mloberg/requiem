@@ -1,14 +1,76 @@
 #!/usr/bin/env bash
+#
+# Setup a brand new Mac
+set -e
 
+info () {
+  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+}
+
+user () {
+  printf "\r  [ \033[0;33m??\033[0m ] $1 "
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+warn () {
+  printf "\r\033[2K  [\033[00;33mWARN\033[0m] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+REQUIEM_INSTALL="~/src/requiem"
+
+# This is where I like to store my code
+mkdir -p ~/src
+
+# Set hostname
+user 'Set your computer hostname (blank to keep it the same)'
+read -e hostname
+
+if [ -n "$hostname" ]; then
+  sudo hostname "$hostname"
+  sudo scutil --set ComputerName "$hostname"
+  sudo scutil --set HostName "$hostname"
+  sudo scutil --set LocalHostName "$hostname"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
+fi
+
+# Prepare Requiem installation
 if ! xcode-select -p &>/dev/null; then
-  echo ">>> Installing Command line tools"
+  info "Installing Command line tools"
   xcode-select --install
+  user '[enter] once command line tools are installed'
 fi
 
 if test ! $(which ansible); then
-  echo ">>> Installing Ansible"
+  info "Installing Ansible"
   sudo easy_install pip
   sudo pip install ansible
 fi
 
-ansible-galaxy install -r requirements.yml
+# Install and update Requiem
+info "Installing Requiem"
+
+if [ ! -d "${REQUIEM_INSTALL}" ]; then
+  git clone https://github.com/mloberg/requiem.git "${REQUIEM_INSTALL}"
+fi
+
+(cd "${REQUIEM_INSTALL}" && git fetch && git pull --rebase)
+
+# Install host specific config
+if [ -f "${REQUIEM_INSTALL}/config/$(hostname).yml" ] && [ ! -f "${REQUIEM_INSTALL}/config/local.yml" ]; then
+  ln -s "${REQUIEM_INSTALL}/config/$(hostname).yml" "${REQUIEM_INSTALL}/config/local.yml"
+fi
+
+info "Run Requiem"
+"${REQUIEM_INSTALL}/script/requiem"
+
+success "Mac Setup Complete"
+warn "Restart your computer for changes to take affect"
