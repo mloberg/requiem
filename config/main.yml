@@ -53,7 +53,7 @@ mas_apps:
 
 dotfiles_repo: 'https://github.com/mloberg/dotfiles.git'
 dotfiles_dest: "~/.dotfiles"
-dotfiles_version: develop
+dotfiles_version: master
 
 bash_it_aliases:
   - bundler
