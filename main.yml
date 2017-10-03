@@ -1,0 +1,31 @@
+---
+- hosts: all
+
+  vars_files:
+    - config/main.yml
+
+  pre_tasks:
+    - include_vars: "config/{{ ansible_hostname|lower }}.yml"
+      ignore_errors: yes
+    - include_vars: "config/local.yml"
+      ignore_errors: yes
+
+  roles:
+    - role: geerlingguy.homebrew
+    - role: geerlingguy.mas
+
+  tasks:
+    - import_tasks: tasks/bash.yml
+    - import_tasks: tasks/dotfiles.yml
+    - import_tasks: tasks/vim.yml
+
+    - name: Install MacOS Updates
+      command: softwareupdate -i -a
+      become: yes
+
+    - name: Install Requiem executable
+      file:
+        src: "{{ playbook_dir }}/script/requiem"
+        dest: /usr/local/bin/requiem
+        state: link
+      become: true

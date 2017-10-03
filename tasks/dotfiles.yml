@@ -1,0 +1,25 @@
+---
+- name: Clone dotfiles
+  git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_dest }}"
+    version: "{{ dotfiles_version }}"
+  ignore_errors: yes # In case we're doing local changes
+
+- name: Collect dotfiles
+  command: "find {{ dotfiles_dest }} -name '*.symlink'"
+  register: dotfiles
+  changed_when: false
+
+- name: Symlink dotfiles
+  file:
+    src: "{{ item }}"
+    dest: "~/.{{ item|basename|splitext|first }}"
+    state: link
+  with_items:
+    - "{{ dotfiles.stdout_lines }}"
+
+- name: Git local config
+  template:
+    src: templates/gitconfig.j2
+    dest: ~/.gitconfig.local

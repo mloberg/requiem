@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if ! xcode-select -p &>/dev/null; then
+  echo ">>> Installing Command line tools"
+  xcode-select --install
+fi
+
+if test ! $(which ansible); then
+  echo ">>> Installing Ansible"
+  sudo easy_install pip
+  sudo pip install ansible
+fi
+
+ansible-galaxy install -r requirements.yml

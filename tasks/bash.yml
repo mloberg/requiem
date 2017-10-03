@@ -1,0 +1,33 @@
+---
+- stat: path=/usr/local/bin/bash
+  register: brew_bash
+
+- name: Add Homebrew bash to list of shells
+  lineinfile:
+    path: /etc/shells
+    line: /usr/local/bin/bash
+  become: yes
+  when: brew_bash.stat.exists
+
+- name: Ensure user is setup
+  user:
+    name: mloberg
+    shell: /usr/local/bin/bash
+    generate_ssh_key: yes
+  become: yes
+  when: brew_bash.stat.exists
+
+- name: Clone Bash-it
+  git:
+    repo: 'https://github.com/Bash-it/bash-it.git'
+    dest: "~/.bash_it"
+
+- name: Install Bash-it
+  command: "~/.bash_it/install.sh --silent --no-modify-config"
+
+- name: Enable Bash-it items
+  shell: "source ~/.bash_it/bash_it.sh && bash-it enable {{ item.key }} {{ item.value|join(' ') }}"
+  with_dict:
+    alias: "{{ bash_it_aliases }}"
+    completion: "{{ bash_it_completions }}"
+    plugin: "{{ bash_it_plugins }}"

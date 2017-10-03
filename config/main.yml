@@ -1,0 +1,80 @@
+---
+git_name: Matt Loberg
+git_email: loberg.matt@gmail.com
+git_credential_helper: "{{ 'osxkeychain' if ansible_distribution == 'MacOSX' else 'cache' }}"
+
+homebrew_taps:
+  - homebrew/core
+  - homebrew/dupes
+  - homebrew/php
+  - homebrew/versions
+  - caskroom/cask
+  - caskroom/fonts
+
+homebrew_installed_packages:
+  - ack
+  - bash
+  - bash-completion
+  - coreutils
+  - git
+  - git-flow
+  - m-cli
+  - n
+  - reattach-to-user-namespace
+  - readline
+  - rbenv
+  - rbenv-default-gems
+  - tmux
+  - wget
+
+homebrew_cask_appdir: /Applications
+homebrew_cask_apps:
+  - atom
+  - caffeine
+  - docker
+  - dropbox
+  - font-source-code-pro
+  - font-source-sans-pro
+  - font-lato
+  - font-monoid
+  - google-chrome
+  - hyper
+  - jetbrains-toolbox
+  - kitematic
+  - sequel-pro
+  - tower
+  - vagrant
+  - virtualbox
+
+mas_installed_apps:
+  - { name: "1Password", id: 443987910 }
+  # - { name: "Affinity Photo", id: 824183456 }
+
+dotfiles_repo: 'https://github.com/mloberg/dotfiles.git'
+dotfiles_dest: "~/.dotfiles"
+dotfiles_version: develop
+
+bash_it_aliases:
+  - bundler
+  - osx
+  - vagrant
+
+bash_it_completions:
+  - brew
+  - bundler
+  - capistrano
+  - composer
+  - docker-compose
+  - docker
+  - gem
+  - git
+  - gulp
+  - makefile
+  - npm
+  - ssh
+  - tmux
+  - vagrant
+
+bash_it_plugins:
+  - extract
+  - tmux
