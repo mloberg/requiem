@@ -3,7 +3,7 @@ git_name: Matt Loberg
 git_email: loberg.matt@gmail.com
 git_credential_helper: "{{ 'osxkeychain' if ansible_distribution == 'MacOSX' else 'cache' }}"
 
-homebrew_taps:
+brew_taps:
   - homebrew/core
   - homebrew/dupes
   - homebrew/php
@@ -11,7 +11,7 @@ homebrew_taps:
   - caskroom/cask
   - caskroom/fonts
 
-homebrew_installed_packages:
+brew_packages:
   - ack
   - bash
   - bash-completion
@@ -28,7 +28,7 @@ homebrew_installed_packages:
   - wget
 
 homebrew_cask_appdir: /Applications
-homebrew_cask_apps:
+cask_apps:
   - atom
   - caffeine
   - docker
@@ -46,9 +46,10 @@ homebrew_cask_apps:
   - vagrant
   - virtualbox
 
-mas_installed_apps:
+homebrew_upgrade_all_packages: yes
+
+mas_apps:
   - { name: "1Password", id: 443987910 }
-  # - { name: "Affinity Photo", id: 824183456 }
 
 dotfiles_repo: 'https://github.com/mloberg/dotfiles.git'
 dotfiles_dest: "~/.dotfiles"

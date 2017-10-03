@@ -5,10 +5,15 @@
     - config/main.yml
 
   pre_tasks:
-    - include_vars: "config/{{ ansible_hostname|lower }}.yml"
-      ignore_errors: yes
-    - include_vars: "config/local.yml"
-      ignore_errors: yes
+    - stat: path=config/local.yml
+      register: local_config_file
+    - include_vars: config/local.yml
+      when: local_config_file.stat.exists
+    - set_fact:
+        homebrew_taps: "{{ brew_taps }} + {{ extra_brew_taps|default([]) }}"
+        homebrew_installed_packages: "{{ brew_packages }} + {{ extra_brew_packages|default([]) }}"
+        homebrew_cask_apps: "{{ cask_apps }} + {{ extra_cask_apps|default([]) }}"
+        mas_installed_apps: "{{ mas_apps }} + {{ extra_mas_apps|default([]) }}"
 
   roles:
     - role: geerlingguy.homebrew
