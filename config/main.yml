@@ -30,6 +30,7 @@ brew_packages:
 homebrew_cask_appdir: /Applications
 cask_apps:
   - atom
+  - beardedspice
   - caffeine
   - docker
   - dropbox
@@ -41,6 +42,7 @@ cask_apps:
   - hyper
   - jetbrains-toolbox
   - kitematic
+  - macdown
   - sequel-pro
   - tower
   - vagrant
