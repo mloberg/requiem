@@ -42,6 +42,8 @@ elif ! git clean -qdf; then
   error "Cleaning up the repo failed"
   echo "Get me into a clean state and try again."
   exit 1
+else
+  success "Updated Requiem"
 fi
 
 ansible-galaxy install -r requirements.yml
