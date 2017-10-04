@@ -16,6 +16,7 @@
     src: "{{ item }}"
     dest: "~/.{{ item|basename|splitext|first }}"
     state: link
+    force: yes
   with_items:
     - "{{ dotfiles.stdout_lines }}"
 
