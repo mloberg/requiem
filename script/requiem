@@ -43,8 +43,10 @@ elif ! git clean -qdf; then
   echo "Get me into a clean state and try again."
   exit 1
 else
-  success "Updated Requiem"
+  success "Updated successfully to $(git log -1 --pretty=format:%h)"
 fi
+
+exit
 
 ansible-galaxy install -r requirements.yml
 ansible-playbook main.yml -K
