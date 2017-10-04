@@ -1,5 +1,49 @@
 #!/usr/bin/env bash
+set -e
+
+success () {
+  printf "\r\033[00;32m$1\033[0m\n"
+}
+
+warn () {
+  printf "\r\033[00;33m$1\033[0m\n"
+}
+
+error () {
+  printf "\r\033[0;31m$1\033[0m\n"
+}
+
+CURRENT_BRANCH=$(git symbolic-ref HEAD)
+
+if [[ -z "${CURRENT_BRANCH}" ]]; then
+  warn "Not on a branch!"
+  echo "Please get me back on a branch with 'git checkout master'"
+elif [[ "${CURRENT_BRANCH}" != "refs/heads/master" ]]; then
+  warn "Not on master!"
+  echo "If you're working on something, that's cool."
+  echo "Merge it to master and when your done and 'git checkout master'"
+elif [[ $(git status --porcelain) ]]; then
+  warn "Found uncommited changes!"
+  echo "I can't auto-update, so you may not get the latest and greatest"
+elif ! git fetch --quiet origin; then
+  warn "git fetch failed"
+elif [[ $(git rev-list --count origin/master..master) != "0" ]]; then
+  warn "Unpushed commits"
+  echo "You probably want to push up your changes"
+elif [[ $(git rev-list --count HEAD..origin/master) != "0" ]]; then
+  success "All up to date"
+elif ! git reset --hard origin/master 2>&1 >/dev/null; then
+  error "Couldn't reset to origin/master"
+  echo "Something is out of sync. Please update me and try again."
+  exit 1
+elif ! git clean -qdf; then
+  error "Cleaning up the repo failed"
+  echo "Get me into a clean state and try again."
+  exit 1
+fi
 
 ansible-galaxy install -r requirements.yml
 ansible-playbook main.yml -K
-~/.macos
+[[ -x ~/.macos ]] && ~/.macos
+
+success ">>> DONE <<<"
