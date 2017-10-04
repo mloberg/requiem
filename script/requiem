@@ -46,8 +46,6 @@ else
   success "Updated successfully to $(git log -1 --pretty=format:%h)"
 fi
 
-exit
-
 ansible-galaxy install -r requirements.yml
 ansible-playbook main.yml -K
 [[ -x ~/.macos ]] && ~/.macos
