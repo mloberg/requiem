@@ -81,3 +81,7 @@ bash_it_completions:
 bash_it_plugins:
   - extract
   - tmux
+
+atom_packages:
+  - atom-ide-ui
+  - ide-php
