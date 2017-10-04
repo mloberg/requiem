@@ -20,6 +20,7 @@ brew_packages:
   - git-flow
   - m-cli
   - n
+  - php71
   - reattach-to-user-namespace
   - readline
   - rbenv
