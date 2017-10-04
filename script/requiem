@@ -13,6 +13,8 @@ error () {
   printf "\r\033[0;31m$1\033[0m\n"
 }
 
+cd "$(dirname $(realpath "$0"))/.."
+
 CURRENT_BRANCH=$(git symbolic-ref HEAD)
 
 if [[ -z "${CURRENT_BRANCH}" ]]; then
@@ -22,7 +24,7 @@ elif [[ "${CURRENT_BRANCH}" != "refs/heads/master" ]]; then
   warn "Not on master!"
   echo "If you're working on something, that's cool."
   echo "Merge it to master and when your done and 'git checkout master'"
-elif [[ $(git status --porcelain) ]]; then
+elif [[ $(git status --porcelain) != "" ]]; then
   warn "Found uncommited changes!"
   echo "I can't auto-update, so you may not get the latest and greatest"
 elif ! git fetch --quiet origin; then
