@@ -18,6 +18,7 @@ brew_packages:
   - coreutils
   - git
   - git-flow
+  - git-lfs
   - m-cli
   - n
   - php71
