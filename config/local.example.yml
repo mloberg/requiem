@@ -11,3 +11,5 @@ extra_mas_apps:
   - { name: "Affinity Photo", id: 824183456 }
 
 extra_atom_packages: []
+
+extra_default_gems: []

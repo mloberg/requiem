@@ -31,3 +31,8 @@
     alias: "{{ bash_it_aliases }}"
     completion: "{{ bash_it_completions }}"
     plugin: "{{ bash_it_plugins }}"
+
+- name: Create ~/.bash.d for loading bash_profile
+  file:
+    path: ~/.bash.d
+    state: directory

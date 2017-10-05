@@ -1,0 +1,37 @@
+---
+- name: Enable rbenv in shell
+  copy:
+    content: |
+      [ -x `which rbenv` ] && eval "$(rbenv init -)"
+    dest: ~/.bash.d/rbenv.bash
+
+- name: Get rbenv root
+  shell: $SHELL -lc "rbenv root"
+  register: rbenv_root
+  changed_when: false
+
+- name: Set default gems to be installed
+  lineinfile:
+    path: "{{ rbenv_root.stdout }}/default-gems"
+    line: "{{ item }}"
+    create: yes
+  with_items:
+    - "{{ default_gems }}"
+    - "{{ extra_default_gems|default([]) }}"
+
+- name: Install Ruby versions
+  shell: $SHELL -lc "rbenv install --skip-existing {{ item }}"
+  register: install_ruby
+  changed_when: install_ruby.stdout != ""
+  with_items:
+    - "{{ ruby_versions }}"
+    - "{{ extra_ruby_versions|default([]) }}"
+
+- name: Get global Ruby version
+  shell: $SHELL -lc "rbenv version"
+  register: current_ruby_version
+  changed_when: false
+
+- name: Set global Ruby version
+  shell: $SHELL -lc "rbenv global {{ global_ruby_version }}"
+  when: not current_ruby_version.stdout.startswith(global_ruby_version)

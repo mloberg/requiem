@@ -87,3 +87,11 @@ bash_it_plugins:
 atom_packages:
   - atom-ide-ui
   - ide-php
+
+default_gems:
+  - bundler
+
+ruby_versions:
+  - 2.3.5
+
+global_ruby_version: 2.3.5
