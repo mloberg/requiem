@@ -95,3 +95,8 @@ ruby_versions:
   - 2.3.5
 
 global_ruby_version: 2.3.5
+
+php_versions:
+  - version: 7.1
+    extensions:
+      - intl

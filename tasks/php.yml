@@ -1,0 +1,12 @@
+---
+- name: Install PHP versions
+  homebrew:
+    name: "php{{ item|replace('.', '') }}"
+  with_items: "{{ php_versions|map(attribute='version')|list }}"
+
+- name: Install PHP extensions
+  homebrew:
+    name: "php{{ item.0.version|replace('.', '') }}-{{ item.1 }}"
+  with_subelements:
+    - "{{ php_versions }}"
+    - extensions
