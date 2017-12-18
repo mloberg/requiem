@@ -27,6 +27,7 @@
     - import_tasks: tasks/vim.yml
     - import_tasks: tasks/ruby.yml
     - import_tasks: tasks/php.yml
+    - import_tasks: tasks/sudoers.yml
 
     - name: Install MacOS Updates
       command: softwareupdate -i -a
