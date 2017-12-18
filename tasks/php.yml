@@ -1,0 +1,29 @@
+---
+- name: Get installed PHP versions
+  shell: brew list | grep 'php[0-9]\{2\}$'
+  register: installed_php_versions
+
+- name: Prepare PHP install
+  homebrew:
+    name: "{{ item }}"
+    state: unlinked
+  with_items: "{{ installed_php_versions.stdout_lines }}"
+
+- name: Install PHP versions
+  shell: "brew install php{{ item|replace('.', '') }} && brew unlink php{{ item|replace('.', '') }}"
+  with_items:
+    - "{{ php_versions|map(attribute='version')|list }}"
+    - "{{ extra_php_versions|default([])|map(attribute='version')|list }}"
+
+- name: Install PHP extensions
+  homebrew:
+    name: "php{{ item.0.version|replace('.', '') }}-{{ item.1 }}"
+  with_subelements:
+    - "{{ php_versions }} + {{ extra_php_versions|default([]) }}"
+    - extensions
+    - skip_missing: True
+
+- name: Set global PHP version
+  homebrew:
+    name: "php{{ global_php_version|replace('.', '') }}"
+    state: linked

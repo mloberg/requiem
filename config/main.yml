@@ -21,7 +21,6 @@ brew_packages:
   - git-lfs
   - m-cli
   - n
-  - php71
   - reattach-to-user-namespace
   - readline
   - rbenv
@@ -87,6 +86,8 @@ bash_it_plugins:
 atom_packages:
   - atom-ide-ui
   - ide-php
+  - language-docker
+  - file-types
 
 default_gems:
   - bundler
@@ -95,3 +96,8 @@ ruby_versions:
   - 2.3.5
 
 global_ruby_version: 2.3.5
+
+php_versions:
+  - version: 7.2
+
+global_php_version: 7.2

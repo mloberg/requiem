@@ -26,6 +26,7 @@
     - import_tasks: tasks/dotfiles.yml
     - import_tasks: tasks/vim.yml
     - import_tasks: tasks/ruby.yml
+    - import_tasks: tasks/php.yml
 
     - name: Install MacOS Updates
       command: softwareupdate -i -a
