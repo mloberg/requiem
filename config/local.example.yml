@@ -12,4 +12,7 @@ extra_mas_apps:
 
 extra_atom_packages: []
 
+extra_ruby_versions: []
 extra_default_gems: []
+
+extra_php_versions: []
