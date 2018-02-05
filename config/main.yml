@@ -19,6 +19,7 @@ brew_packages:
   - git
   - git-flow
   - git-lfs
+  - git-standup
   - m-cli
   - n
   - reattach-to-user-namespace
@@ -44,6 +45,7 @@ cask_apps:
   - jetbrains-toolbox
   - kitematic
   - macdown
+  - rocket
   - sequel-pro
   - tower
   - vagrant
