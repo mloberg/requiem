@@ -24,6 +24,7 @@ brew_packages:
   - readline
   - rbenv
   - rbenv-default-gems
+  - thefuck
   - tmux
   - wget
 
