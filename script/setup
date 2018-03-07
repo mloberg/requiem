@@ -72,5 +72,10 @@ fi
 info "Run Requiem"
 "${REQUIEM_INSTALL}/script/requiem"
 
+if [ -x ~/.macos ]; then
+  info "MacOS Defaults"
+  ~/.macos
+fi
+
 success "Mac Setup Complete"
 warn "Restart your computer for changes to take affect"

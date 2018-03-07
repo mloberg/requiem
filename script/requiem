@@ -48,6 +48,3 @@ fi
 
 ansible-galaxy install -r requirements.yml
 ansible-playbook main.yml -K
-[ -x ~/.macos ] && ~/.macos
-
-success ">>> DONE <<<"
