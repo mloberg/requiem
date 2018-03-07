@@ -5,9 +5,7 @@ git_credential_helper: "{{ 'osxkeychain' if ansible_distribution == 'MacOSX' els
 
 brew_taps:
   - homebrew/core
-  - homebrew/dupes
   - homebrew/php
-  - homebrew/versions
   - caskroom/cask
   - caskroom/fonts
 
