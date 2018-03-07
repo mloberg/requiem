@@ -13,7 +13,7 @@ error () {
   printf "\r\033[0;31m$1\033[0m\n"
 }
 
-cd "$(dirname $(realpath "$0"))/.."
+cd "$(cd -P -- "$(dirname -- "$0")" && pwd -P)/.."
 
 CURRENT_BRANCH=$(git symbolic-ref HEAD)
 
