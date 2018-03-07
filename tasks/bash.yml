@@ -20,17 +20,32 @@
 - name: Clone Bash-it
   git:
     repo: 'https://github.com/Bash-it/bash-it.git'
+    depth: 1
     dest: "~/.bash_it"
 
 - name: Install Bash-it
   command: "~/.bash_it/install.sh --silent --no-modify-config"
 
-- name: Enable Bash-it items
-  shell: "source ~/.bash_it/bash_it.sh && bash-it enable {{ item.key }} {{ item.value|join(' ') }}"
-  with_dict:
-    alias: "{{ bash_it_aliases }}"
-    completion: "{{ bash_it_completions }}"
-    plugin: "{{ bash_it_plugins }}"
+- name: Enable Bash-it aliases
+  file:
+    src: "~/.bash_it/aliases/available/{{ item }}.aliases.bash"
+    dest: "~/.bash_it/aliases/enabled/{{ item }}.aliases.bash"
+    state: link
+  with_items: "{{ bash_it_aliases }}"
+
+- name: Enable Bash-it completions
+  file:
+    src: "~/.bash_it/completion/available/{{ item }}.completion.bash"
+    dest: "~/.bash_it/completion/enabled/{{ item }}.completion.bash"
+    state: link
+  with_items: "{{ bash_it_completions }}"
+
+- name: Enable Bash-it plugins
+  file:
+    src: "~/.bash_it/plugins/available/{{ item }}.plugin.bash"
+    dest: "~/.bash_it/plugins/enabled/{{ item }}.plugin.bash"
+    state: link
+  with_items: "{{ bash_it_plugins }}"
 
 - name: Create ~/.bash.d for loading bash_profile
   file:

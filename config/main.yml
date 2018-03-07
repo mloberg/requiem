@@ -60,27 +60,35 @@ dotfiles_version: master
 
 bash_it_aliases:
   - bundler
+  - fuck
+  - general
   - osx
   - vagrant
 
 bash_it_completions:
   - brew
   - bundler
-  - capistrano
   - composer
   - docker-compose
   - docker
   - gem
   - git
+  - go
   - gulp
   - makefile
   - npm
+  - pip
+  - pip3
+  - pipenv
   - ssh
   - tmux
   - vagrant
 
 bash_it_plugins:
+  - docker
   - extract
+  - node
+  - python
   - tmux
 
 atom_packages:
