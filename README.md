@@ -1,5 +1,7 @@
 # Requiem
 
+**abandoned** - This project has been abandoned. It was an interesting experiment in how to manage a local Mac environment using Anisble. I didn't use it much, and every time I did, it seemed like something needed to be tweaked in order to work.
+
 My Mac setup using Ansible.
 
 ## Installing
